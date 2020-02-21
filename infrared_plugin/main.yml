@@ -37,25 +37,9 @@
         artcl_report_server_key: "-i {{ artcl_report_server_key }}"
       when: artcl_report_server_key is defined
 
-    - name: Extract the logs
-      shell: |
-        cat *.tar | tar xf - -i
-      args:
-        chdir: "{{ artcl_collect_dir }}"
-        executable: /bin/bash
-      ignore_errors: true
-
-    - name: delete the tar file after extraction
-      shell: |
-        rm -r *.tar
-      args:
-        chdir: "{{ artcl_collect_dir }}"
-        executable: /bin/bash
-      ignore_errors: true
-
     - name: Ansible role collect logs
       include_role:
-        name: ansible-role-collect-logs
+        name: ansible-role-publish-logs
 
     # TODO: local_working_dir should be unique per each run - a job should
     # never fail due to a reason that f.e. the artifacts weren't removed
